@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mrshakhriyor_ielts — Reading & Practice Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .split-scroll::-webkit-scrollbar { width: 6px; }
+    .split-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <!-- TOP NAVIGATION HEADER -->
+  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="bg-indigo-600 p-2 rounded-lg text-white">
+          <i class="fa-solid fa-book-open text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">mrshakhriyor_ielts</h1>
+          <p class="text-xs text-slate-400">Academic Reading & Daily Articles</p>
+        </div>
+      </div>
+
+      <!-- Auth Controls -->
+      <div class="flex items-center space-x-3">
+        <div id="auth-controls" class="flex items-center space-x-2">
+          <input type="text" id="username-input" placeholder="Enter student name..." class="px-3 py-1.5 rounded bg-slate-800 text-white text-sm border border-slate-700 focus:outline-none focus:border-indigo-500" />
+          <button onclick="handleLogin()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-4 py-1.5 rounded font-medium transition">Login</button>
+        </div>
+        <div id="user-badge" class="hidden flex items-center space-x-3 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+          <i class="fa-solid fa-user-graduate text-indigo-400"></i>
+          <span id="display-username" class="text-sm font-semibold text-slate-200"></span>
+          <button onclick="handleLogout()" class="text-xs text-rose-400 hover:text-rose-300 ml-2">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-slate-950 px-4 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto flex space-x-2 text-sm font-medium">
+        <button onclick="switchTab('profile')" id="btn-profile" class="tab-btn px-4 py-2.5 text-indigo-400 border-b-2 border-indigo-500">Profile & Analytics</button>
+        <button onclick="switchTab('test')" id="btn-test" class="tab-btn px-4 py-2.5 text-slate-400 border-b-2 border-transparent hover:text-slate-200">Reading Passage 1</button>
+        <button onclick="switchTab('article')" id="btn-article" class="tab-btn px-4 py-2.5 text-slate-400 border-b-2 border-transparent hover:text-slate-200">Daily Article (Day 2)</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto p-4 flex-1 w-full">
+
+    <!-- 1. STUDENT PROFILE & STATS -->
+    <section id="tab-profile" class="tab-pane block">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Tests Completed</div>
+          <div id="stat-tests" class="text-4xl font-black text-indigo-600">0</div>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Average Score</div>
+          <div id="stat-score" class="text-4xl font-black text-emerald-600">0 / 13</div>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Time Practicing</div>
+          <div id="stat-time" class="text-4xl font-black text-amber-600">0m 0s</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-chart-line text-indigo-600"></i> Performance History
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-50 text-slate-500 text-xs uppercase border-b border-slate-200">
+                <th class="py-3 px-4">Date</th>
+                <th class="py-3 px-4">Test Title</th>
+                <th class="py-3 px-4">Score</th>
+                <th class="py-3 px-4">Time Spent</th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody">
+              <tr>
+                <td colspan="4" class="py-6 text-center text-slate-400">Please enter your student name above to view your profile and test history.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. READING PASSAGE 1 (SPLIT SCREEN) -->
+    <section id="tab-test" class="tab-pane hidden">
+      <!-- Exam Control Bar -->
+      <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center mb-4">
+        <div>
+          <span class="font-bold text-slate-800 text-base">Passage 1: The Whale Goes to Court</span>
+          <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded ml-2 border border-slate-200">13 Questions • 20 Mins Suggested</span>
+        </div>
+        <div class="flex items-center space-x-2 bg-indigo-50 border border-indigo-200 text-indigo-900 px-3.5 py-1.5 rounded-lg font-mono font-bold text-base">
+          <i class="fa-regular fa-clock"></i>
+          <span id="exam-timer">00:00</span>
+        </div>
+      </div>
+
+      <!-- Split Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[75vh]">
+        <!-- Passage Content (Left Pane) -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm overflow-y-auto split-scroll text-justify text-slate-700 leading-relaxed text-[15px] space-y-4">
+          <h2 class="text-2xl font-black text-slate-900">The Whale Goes to Court</h2>
+          <h4 class="text-slate-500 text-sm italic mb-4">A remarkable legal drama in the U.S.A.</h4>
+          <p>In 1818, a whale became the subject of a controversial court case in New York City. The case involved an old law requiring those who sold fish oil to pay a fee in order to have their barrels inspected by city officials and certified. However, an oil merchant named Samuel Judd refused to pay the inspection fee on three barrels of oil, claiming that no inspection was necessary because it was whale oil, and whales were not fish. The state disagreed, and so a date was set for a court to decide not a point of law, but the answer to a more fundamental question: Is a whale a fish?</p>
+          <p>As simple as that question may appear today, the answer was far from obvious in the early nineteenth century. Indeed, the public debate in New York sparked off by the trial was sensational. At stake was nothing less than what most regarded as the order of nature. According to the commonly accepted scheme of things, if an animal was not a beast or a bird, it was a fish, regardless of whether it breathed air or suckled its young. For as long as anyone could remember, all non-human creatures had been organized according to the categories of birds, beasts, or fish. For the average person, the answer seemed perfectly obvious: whales swam in the sea and therefore they were fish.</p>
+          <p>Against this traditional framework stood the new Linnaean system of classification, which sought to introduce more scientific values into the classification of living things. Barely half a century old in 1818, the Linnaean system controversially classified whales as mammals because they shared two mammalian characteristics: they were warm-blooded and breathed air.</p>
+          <p>So the trial began in December 1818. Judd's defense lawyers chose as their star witness one of New York's most prominent figures, the congressman Samuel Mitchill. Referred to as a "living encyclopedia" and a "walking library", Mitchill was a renowned natural history lecturer at the College of Physicians and Surgeons who liked to dare his students to test his knowledge of the natural world. "Show me the fin, and I will name the fish," he boasted. Scientifically, it was an open-and-shut case, and Judd's defense lawyers believed they had only one simple thing to win the trial: insist that it be decided by biology alone. Mitchill seemed fully qualified for this role.</p>
+          <p>But this is where the case becomes interesting, and is the reason why the trial of the whale is not some dusty nineteenth-century obscurity. For rather than debate Mitchill on his area of expertise, lawyers for the New York City fish-oil inspectors chose a different tack. Lead counsel William Sampson turned the trial into a contest between scientific learning and common sense, by asking plain-spoken whalers to make their case before the jury.</p>
+          <p>The crux of Sampson's case was the trial's implication with regard to humans: should Judd be found not guilty? Sampson told jury members that if they accepted Mitchill's testimony on whales, they were obliged to accept a lower place for their own kind in the natural order. As a result, Mitchill's day in court did not go smoothly, not least because he was forced to acknowledge disputes among biologists. Sampson then took aim at Mitchill himself and what he represented: privileged aristocrats from the scientific community who had lost touch with reality. The smooth-talking Sampson claimed Mitchill's beliefs had their origin in Europe — something he rightly judged would infuriate the citizens of always-independent New York. This revolutionary new thinking, Sampson claimed, was something that honest working New Yorkers could do without. No longer was this a case about barrels of oil; but the proper place of scientific knowledge in the U.S.A. Ultimately, what won the case for Samuel Judd were not Mitchill's scientific arguments, but testimony from a different sphere altogether.</p>
+          <p>In New York's markets, the merchants implicitly understood that whale oil and fish oil were not the same: whale oil could be used as a fuel for lamps because it could be burned without giving off smoke; fish oil, on the other hand, was nasty, impure stuff used primarily in tanning leather. In the end, it was this that led to Judd's victory.</p>
+          <p>The trial of the whale still has relevance today, when the court of public opinion remains easily swayed by skeptics. The trial of the whale about this question: who gets to decide on the place of scientific expertise or public opinion? Whether the issue today is the effects of human activity on the climate of this planet, or one of many other contemporary topics, the legacy of Judd's case continues to be of relevance.</p>
+        </div>
+
+        <!-- Questions & Input Form (Right Pane) -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm overflow-y-auto split-scroll">
+          <form id="ielts-test-form" onsubmit="handleTestSubmit(event)">
+            <!-- Questions 1-7 -->
+            <div class="mb-8">
+              <h3 class="font-bold text-slate-900 border-b border-slate-200 pb-2 mb-3">Questions 1–7</h3>
+              <p class="text-xs text-slate-500 mb-4">Do the following statements agree with the information in the passage? Choose <strong>TRUE</strong>, <strong>FALSE</strong>, or <strong>NOT GIVEN</strong>.</p>
+              <div class="space-y-4 text-sm">
+                <div>
+                  <label class="block font-medium mb-1">1. An inspection fee for fish oil was introduced in New York in 1818.</label>
+                  <select name="q1" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50" required>
+                    <option value="">Select an option...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">2. Samuel Judd argued that the inspection fee should exclude whale oil.</label>
+                  <select name="q2" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50" required>
+                    <option value="">Select an option...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">3. Judd had been in trouble with city officials before the inspection fee disagreement.</label>
+                  <select name="q3" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50" required>
+                    <option value="">Select an option...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">4. Many New Yorkers were interested in the court case at the time.</label>
+                  <select name="q4" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50" required>
+                    <option value="">Select an option...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">5. Traditionally, non-human creatures had been classified in one of three groups.</label>
+                  <select name="q5" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50" required>
+                    <option value="">Select an option...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">6. Generally speaking, ordinary people thought fish were the lowest form of life.</label>
+                  <select name="q6" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50" required>
+                    <option value="">Select an option...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">7. Whales were excluded from the Linnaean system in 1818.</label>
+                  <select name="q7" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50" required>
+                    <option value="">Select an option...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Questions 8-13 -->
+            <div class="mb-8">
+              <h3 class="font-bold text-slate-900 border-b border-slate-200 pb-2 mb-3">Questions 8–13</h3>
+              <p class="text-xs text-slate-500 mb-4">Complete the notes below. Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</p>
+              <div class="space-y-4 text-sm">
+                <div>
+                  <label class="block font-medium mb-1">8. Samuel Mitchill worked as a congressman and a <span class="text-indigo-600 font-bold">[8]</span>.</label>
+                  <input type="text" name="q8" placeholder="Type 1 word..." class="w-full border border-slate-300 rounded-lg p-2" required />
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">9. William Sampson called <span class="text-indigo-600 font-bold">[9]</span> as a witness to appeal to the common sense of the jury.</label>
+                  <input type="text" name="q9" placeholder="Type 1 word..." class="w-full border border-slate-300 rounded-lg p-2" required />
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">10. New Yorkers disliked Mitchill because his ideas came from <span class="text-indigo-600 font-bold">[10]</span>.</label>
+                  <input type="text" name="q10" placeholder="Type 1 word..." class="w-full border border-slate-300 rounded-lg p-2" required />
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">11. In the end, it was statements from local <span class="text-indigo-600 font-bold">[11]</span>, not Mitchill's testimony, which helped Judd win.</label>
+                  <input type="text" name="q11" placeholder="Type 1 word..." class="w-full border border-slate-300 rounded-lg p-2" required />
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">12. Whale oil made a good <span class="text-indigo-600 font-bold">[12]</span> because it was clean.</label>
+                  <input type="text" name="q12" placeholder="Type 1 word..." class="w-full border border-slate-300 rounded-lg p-2" required />
+                </div>
+                <div>
+                  <label class="block font-medium mb-1">13. Judd's case is relevant today, e.g. in the debate about Earth's <span class="text-indigo-600 font-bold">[13]</span>.</label>
+                  <input type="text" name="q13" placeholder="Type 1 word..." class="w-full border border-slate-300 rounded-lg p-2" required />
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow transition">
+              Submit Answers & Calculate Band
+            </button>
+          </form>
+
+          <!-- Result Panel -->
+          <div id="results-panel" class="hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. DAILY READING ARTICLE (DAY 2) -->
+    <section id="tab-article" class="tab-pane hidden">
+      <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between border-b pb-3 mb-6">
+          <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">Daily Reading • Day 2[cite: 1]</span>
+          <span class="text-xs text-slate-400">11 July 2026 • New Scientist</span>
+        </div>
+        <h2 class="text-3xl font-black text-slate-900 mb-2">The Science of Fatherhood[cite: 2]</h2>
+        <p class="text-slate-500 text-sm mb-6">Book Review: <em>Dad Brain</em> by Darby Saxbe | Reviewed by Olivia Goldhill</p>
+
+        <div class="text-slate-700 leading-relaxed text-base space-y-4">
+          <p>Did you know that fathers with smaller testicles experience a stronger response in the brain when they look at pictures of their babies? Or that these men are also rated as more hands-on parents by their partners? These are among the many unexpected details woven into Darby Saxbe’s <em>Dad Brain: The new science of fatherhood and how it shapes men's lives</em>.</p>
+          <p>Saxbe is a psychologist at the University of Southern California who researches parenting, and acknowledges upfront that it might be odd for a woman to write a whole book on fathers. But then, she adds, that hasn’t stopped the many men who research and opine on women’s health.</p>
+          <p>Saxbe has the expertise, and makes a strong case for understanding dads' brains: a father's level of engagement is closely correlated with the wellbeing of both partners and children. When parenting, the whole family needs to be understood and supported.</p>
+          <div class="bg-slate-50 border-l-4 border-indigo-600 p-4 my-4 italic text-slate-800">
+            "In the Republic of the Congo, Aka fathers spend much of their time holding and cuddling their infants, even while climbing trees and hunting. They are within arm's reach of their children almost 50 per cent of the time — in contrast to the Kipsigis people in East Africa, where men believe a baby's regurgitations and poo can harm their masculinity, and aren't supposed to see their children in the first weeks after birth."
+          </div>
+          <p>Globally, while mothers are often physically tied through pregnancy and breastfeeding, fathers remain largely overlooked in scientific literature: a search for "mothers" returns 10 times more results than for "fathers". Yet fathers are hugely important — toddlers wake up less often at night when fathers take part in bedtime routines.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- APPLICATION LOGIC -->
+  <script>
+    const ANSWER_KEY = {
+      q1: "FALSE",
+      q2: "TRUE",
+      q3: "NOT GIVEN",
+      q4: "TRUE",
+      q5: "TRUE",
+      q6: "NOT GIVEN",
+      q7: "FALSE",
+      q8: "lecturer",
+      q9: "whalers",
+      q10: "europe",
+      q11: "merchants",
+      q12: "fuel",
+      q13: "climate"
+    };
+
+    let currentUser = localStorage.getItem('mrshakhriyor_user') || null;
+    let timerSeconds = 0;
+    let timerInterval = null;
+
+    window.onload = () => {
+      if (currentUser) {
+        showLoggedInState();
+        refreshProfileData();
+      }
+    };
+
+    function handleLogin() {
+      const username = document.getElementById('username-input').value.trim();
+      if (!username) return alert('Please enter your name');
+      currentUser = username;
+      localStorage.setItem('mrshakhriyor_user', currentUser);
+      showLoggedInState();
+      refreshProfileData();
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('mrshakhriyor_user');
+      currentUser = null;
+      document.getElementById('auth-controls').classList.remove('hidden');
+      document.getElementById('user-badge').classList.add('hidden');
+      refreshProfileData();
+    }
+
+    function showLoggedInState() {
+      document.getElementById('auth-controls').classList.add('hidden');
+      document.getElementById('user-badge').classList.remove('hidden');
+      document.getElementById('display-username').textContent = currentUser;
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.className = 'tab-btn px-4 py-2.5 text-slate-400 border-b-2 border-transparent hover:text-slate-200';
+      });
+
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      document.getElementById(`btn-${tabId}`).className = 'tab-btn px-4 py-2.5 text-indigo-400 border-b-2 border-indigo-500';
+
+      if (tabId === 'test' && !timerInterval) {
+        startTimer();
+      }
+      if (tabId === 'profile') {
+        refreshProfileData();
+      }
+    }
+
+    function startTimer() {
+      timerSeconds = 0;
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+        const secs = String(timerSeconds % 60).padStart(2, '0');
+        document.getElementById('exam-timer').textContent = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function handleTestSubmit(e) {
+      e.preventDefault();
+      if (!currentUser) {
+        alert('Please log in with a username at the top before submitting your test.');
+        switchTab('profile');
+        return;
+      }
+
+      clearInterval(timerInterval);
+      timerInterval = null;
+
+      const formData = new FormData(e.target);
+      let score = 0;
+      let reviewHTML = '';
+
+      for (let i = 1; i <= 13; i++) {
+        const userVal = (formData.get('q' + i) || '').trim().toLowerCase();
+        const correctVal = ANSWER_KEY['q' + i].toLowerCase();
+        const isCorrect = userVal === correctVal;
+        if (isCorrect) score++;
+
+        reviewHTML += `
+          <div class="p-3 rounded-lg border text-sm flex justify-between items-center ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'}">
+            <span><strong>Q${i}:</strong> Your answer: <em>${userVal || 'Blank'}</em></span>
+            <span>Correct: <strong>${ANSWER_KEY['q' + i]}</strong></span>
+          </div>
+        `;
+      }
+
+      // Save to local storage
+      const history = JSON.parse(localStorage.getItem(`history_${currentUser}`) || '[]');
+      history.push({
+        date: new Date().toLocaleDateString(),
+        title: "Passage 1: The Whale Goes to Court",
+        score: score,
+        timeSeconds: timerSeconds
+      });
+      localStorage.setItem(`history_${currentUser}`, JSON.stringify(history));
+
+      // Display scorecard
+      const form = document.getElementById('ielts-test-form');
+      const panel = document.getElementById('results-panel');
+      form.classList.add('hidden');
+      panel.classList.remove('hidden');
+
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+
+      panel.innerHTML = `
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-6">
+          <div class="text-center pb-4 border-b border-slate-200">
+            <span class="text-xs uppercase tracking-wider font-bold text-slate-400">Test Completed</span>
+            <div class="text-5xl font-black text-indigo-600 my-2">${score} / 13</div>
+            <p class="text-sm text-slate-500">Completed in <strong>${mins}m ${secs}s</strong></p>
+          </div>
+          <div class="space-y-2 mt-4 max-h-64 overflow-y-auto split-scroll pr-1">
+            ${reviewHTML}
+          </div>
+          <button onclick="retakeTest()" class="mt-5 w-full bg-slate-900 text-white font-bold py-2.5 rounded-lg hover:bg-slate-800 transition">Retake Test</button>
+        </div>
+      `;
+    }
+
+    function retakeTest() {
+      document.getElementById('ielts-test-form').reset();
+      document.getElementById('ielts-test-form').classList.remove('hidden');
+      document.getElementById('results-panel').classList.add('hidden');
+      startTimer();
+    }
+
+    function refreshProfileData() {
+      if (!currentUser) {
+        document.getElementById('stat-tests').textContent = '0';
+        document.getElementById('stat-score').textContent = '0 / 13';
+        document.getElementById('stat-time').textContent = '0m 0s';
+        document.getElementById('history-tbody').innerHTML = `
+          <tr><td colspan="4" class="py-6 text-center text-slate-400">Please enter your student name above to view your profile and test history.</td></tr>
+        `;
+        return;
+      }
+
+      const history = JSON.parse(localStorage.getItem(`history_${currentUser}`) || '[]');
+      const totalTests = history.length;
+
+      document.getElementById('stat-tests').textContent = totalTests;
+
+      if (totalTests === 0) {
+        document.getElementById('stat-score').textContent = '0 / 13';
+        document.getElementById('stat-time').textContent = '0m 0s';
+        document.getElementById('history-tbody').innerHTML = `
+          <tr><td colspan="4" class="py-6 text-center text-slate-400">No tests taken yet. Open the "Reading Passage 1" tab to start your first test!</td></tr>
+        `;
+        return;
+      }
+
+      const totalScore = history.reduce((acc, curr) => acc + curr.score, 0);
+      const avgScore = (totalScore / totalTests).toFixed(1);
+      document.getElementById('stat-score').textContent = `${avgScore} / 13`;
+
+      const totalTime = history.reduce((acc, curr) => acc + curr.timeSeconds, 0);
+      const mins = Math.floor(totalTime / 60);
+      const secs = totalTime % 60;
+      document.getElementById('stat-time').textContent = `${mins}m ${secs}s`;
+
+      const rows = history.slice().reverse().map(item => `
+        <tr class="border-b border-slate-100 hover:bg-slate-50">
+          <td class="py-3 px-4">${item.date}</td>
+          <td class="py-3 px-4 font-semibold text-slate-800">${item.title}</td>
+          <td class="py-3 px-4 font-bold ${item.score >= 9 ? 'text-emerald-600' : 'text-indigo-600'}">${item.score}/13</td>
+          <td class="py-3 px-4 text-slate-500">${Math.floor(item.timeSeconds / 60)}m ${item.timeSeconds % 60}s</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('history-tbody').innerHTML = rows;
+    }
+  </script>
+</body>
+</html>
