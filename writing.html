@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing Practice — mrshakhriyor_ielts</title>
+  <meta name="description" content="IELTS Writing Task 1 and Task 2 practice with an exam timer, live word count and self-assessment checklist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="writing">
+  <main>
+    <div class="container">
+      <div class="page-head">
+        <h1>Writing practice</h1>
+        <p>Pick a task, start the timer and write. Your draft is saved automatically as you type. When you finish, check your essay against the four marking criteria.</p>
+      </div>
+
+      <div class="tabs" id="task-tabs" role="tablist">
+        <button class="tab active" data-task="1" role="tab">Task 1</button>
+        <button class="tab" data-task="2" role="tab">Task 2</button>
+      </div>
+
+      <div class="writing-layout">
+        <aside class="stack">
+          <div class="card">
+            <label class="field">
+              <span>Choose a prompt</span>
+              <select class="input" id="prompt-select"></select>
+            </label>
+            <div id="prompt-box" style="margin-top:16px"></div>
+          </div>
+          <div class="card checklist">
+            <h3>Self-check before you finish</h3>
+            <div id="criteria"></div>
+          </div>
+        </aside>
+
+        <section class="stack">
+          <div class="card exam-bar" style="margin:0">
+            <div class="row">
+              <span class="timer" id="w-timer">20:00</span>
+              <button class="btn sm" id="w-start">Start timer</button>
+              <button class="btn ghost sm" id="w-reset">Reset</button>
+            </div>
+            <div class="row">
+              <span class="chip" id="w-count">0 words</span>
+              <span class="faint tiny" id="w-saved"></span>
+            </div>
+          </div>
+          <textarea class="essay" id="essay" placeholder="Start writing your answer here…" spellcheck="false" aria-label="Your answer"></textarea>
+          <div class="spread">
+            <span class="faint small">Spell-check is off, as in the real test.</span>
+            <div class="row">
+              <button class="btn ghost" id="w-clear">Clear</button>
+              <button class="btn" id="w-finish">Finish & save</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/data/writing-prompts.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/pages/writing.js"></script>
+</body>
+</html>

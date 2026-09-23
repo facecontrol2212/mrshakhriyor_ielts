@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mrshakhriyor_ielts — IELTS Practice</title>
+  <meta name="description" content="Free IELTS practice: timed reading tests, writing tasks with word counter, speaking cue cards, daily articles and a band score calculator." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="home">
+  <main>
+    <div class="container">
+      <section class="hero">
+        <div>
+          <span class="chip brand">Welcome to the real IELTS world</span>
+          <h1 style="margin-top:14px">Reach your <em>target band</em> with daily, focused practice.</h1>
+          <p class="lead">Timed Reading tests in the real exam layout, Writing tasks with a live word counter, Speaking cue cards with a prep timer, and a new article to read every day.</p>
+          <div class="row" style="margin-top:22px">
+            <a class="btn" href="reading.html">Start a reading test</a>
+            <a class="btn ghost" href="calculator.html">Calculate my band</a>
+          </div>
+        </div>
+        <div class="card hero-card">
+          <div class="spread">
+            <div>
+              <div class="eyebrow">Your target</div>
+              <div class="band-big" id="home-target">7.0</div>
+            </div>
+            <div style="text-align:right">
+              <div class="eyebrow">Latest reading estimate</div>
+              <div class="band-big" id="home-latest" style="color:var(--text)">–</div>
+            </div>
+          </div>
+          <div class="grid grid-3" style="margin-top:20px">
+            <div class="stat"><div class="value" id="home-tests" style="font-size:26px">0</div><div class="label">Tests</div></div>
+            <div class="stat"><div class="value" id="home-essays" style="font-size:26px">0</div><div class="label">Essays</div></div>
+            <div class="stat"><div class="value" id="home-time" style="font-size:26px">0m</div><div class="label">Practice</div></div>
+          </div>
+          <a class="btn ghost block" href="dashboard.html" style="margin-top:18px">Open my progress</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Practise all four skills</h2>
+        <div class="grid grid-4" style="margin-top:14px">
+          <a class="card module-card" href="reading.html">
+            <div class="module-icon">📖</div>
+            <h3>Reading</h3>
+            <p class="muted small">Split-screen passages, a timer, automatic marking and an explanation for every answer.</p>
+          </a>
+          <a class="card module-card" href="writing.html">
+            <div class="module-icon">✍️</div>
+            <h3>Writing</h3>
+            <p class="muted small">Task 1 & Task 2 prompts, exam timer, live word count, autosaved drafts and a self-check list.</p>
+          </a>
+          <a class="card module-card" href="speaking.html">
+            <div class="module-icon">🎤</div>
+            <h3>Speaking</h3>
+            <p class="muted small">Part 1 questions, Part 2 cue cards with 1-minute prep and 2-minute talk, Part 3 follow-ups.</p>
+          </a>
+          <a class="card module-card" href="calculator.html">
+            <div class="module-icon">🧮</div>
+            <h3>Band calculator</h3>
+            <p class="muted small">Convert Listening and Reading raw scores and work out your overall band.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="spread">
+          <h2 style="margin:0">Today's article</h2>
+          <a href="articles.html" class="small">All articles →</a>
+        </div>
+        <a class="card module-card" id="home-article" href="articles.html" style="margin-top:14px"></a>
+      </section>
+
+      <section class="section">
+        <h2>How to use this site</h2>
+        <div class="grid grid-3" style="margin-top:14px">
+          <div class="card">
+            <div class="eyebrow">Step 1</div>
+            <h3>Set your target</h3>
+            <p class="muted small">Add your name and target band on <a href="dashboard.html">My Progress</a>. Everything is saved in your browser; no account needed.</p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Step 2</div>
+            <h3>Practise every day</h3>
+            <p class="muted small">Read the daily article, take one reading passage under time, and write one task.</p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Step 3</div>
+            <h3>Review your mistakes</h3>
+            <p class="muted small">Read the explanations after each test and track your band estimate over time.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/js/data/articles.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/pages/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading Tests — mrshakhriyor_ielts</title>
+  <meta name="description" content="Timed IELTS Academic Reading passages with automatic marking and explanations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="reading">
+  <main>
+    <div class="container">
+      <!-- Test list -->
+      <section id="list-view">
+        <div class="page-head">
+          <h1>Reading tests</h1>
+          <p>Each passage runs in the real exam layout: text on the left, questions on the right, with a countdown timer. Answers are marked automatically and every answer comes with an explanation.</p>
+        </div>
+        <div class="grid grid-3" id="test-list"></div>
+      </section>
+
+      <!-- Test runner -->
+      <section id="test-view" class="hidden">
+        <div class="card exam-bar">
+          <div class="row">
+            <a href="reading.html" class="btn ghost sm">← All tests</a>
+            <strong id="t-title"></strong>
+            <span class="chip" id="t-meta"></span>
+          </div>
+          <div class="row">
+            <label class="row small muted" title="Select text in the passage to highlight it">
+              <input type="checkbox" id="highlight-toggle" checked /> Highlighter
+            </label>
+            <span class="timer" id="t-timer" aria-live="off">20:00</span>
+          </div>
+        </div>
+        <div class="split">
+          <article class="card passage" id="t-passage"></article>
+          <div class="card" id="t-questions-pane">
+            <form id="t-form" novalidate></form>
+            <div id="t-result" class="hidden"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/js/data/reading-tests.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/pages/reading.js"></script>
+</body>
+</html>

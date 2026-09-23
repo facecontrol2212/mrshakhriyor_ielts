@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Progress — mrshakhriyor_ielts</title>
+  <meta name="description" content="Track your IELTS practice: reading scores, band estimates, essays and speaking sessions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="dashboard">
+  <main>
+    <div class="container">
+      <div class="page-head spread">
+        <div>
+          <h1 id="d-hello">My progress</h1>
+          <p>Your results are stored in this browser only. Use Export to keep a backup or move to another device.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="align-items:start">
+        <form class="card" id="profile-form">
+          <h3>Profile</h3>
+          <div class="grid grid-2">
+            <label class="field"><span>Your name</span><input class="input" id="p-name" maxlength="40" placeholder="e.g. Aziza" /></label>
+            <label class="field"><span>Target band</span><select class="input" id="p-target"></select></label>
+          </div>
+          <div class="row" style="margin-top:14px">
+            <button class="btn sm" type="submit">Save profile</button>
+          </div>
+        </form>
+        <div class="card">
+          <h3>Reading band trend</h3>
+          <div id="d-chart"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-4 section" style="margin-top:16px">
+        <div class="card stat"><div class="value" id="d-tests">0</div><div class="label">Reading tests</div></div>
+        <div class="card stat"><div class="value" id="d-band" style="color:var(--good)">–</div><div class="label">Avg reading band</div></div>
+        <div class="card stat"><div class="value" id="d-essays" style="color:var(--warn)">0</div><div class="label">Essays written</div></div>
+        <div class="card stat"><div class="value" id="d-time" style="color:var(--text)">0m</div><div class="label">Total practice</div></div>
+      </div>
+
+      <div class="card section">
+        <div class="spread">
+          <h3 style="margin:0">Activity history</h3>
+          <div class="row">
+            <button class="btn ghost sm" id="d-export">Export</button>
+            <label class="btn ghost sm" style="cursor:pointer">Import<input type="file" id="d-import" accept="application/json" class="hidden" /></label>
+            <button class="btn ghost sm" id="d-reset" style="color:var(--bad)">Reset</button>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:12px">
+          <table class="table">
+            <thead><tr><th>Date</th><th>Module</th><th>Activity</th><th>Result</th><th>Time</th></tr></thead>
+            <tbody id="d-history"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card section">
+        <h3>My essays</h3>
+        <div id="d-essays-list" class="vocab"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/pages/dashboard.js"></script>
+</body>
+</html>
