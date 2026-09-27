@@ -1,0 +1,13 @@
+node_modules
+dist
+coverage
+*.local
+.DS_Store
+.vite
+test-results
+playwright-report
+blob-report
+# audio generation workspace (model files are large and downloaded on demand)
+scripts/.tts
+scripts/.audio-jobs.json
+__pycache__

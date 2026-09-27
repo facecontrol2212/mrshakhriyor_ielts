@@ -1,0 +1,233 @@
+@import 'tailwindcss';
+
+/* ─── Design tokens (public site) ───────────────────────────────────────── */
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-exam: Arial, Helvetica, 'Liberation Sans', sans-serif;
+
+  --color-ink-950: #0b1020;
+  --color-ink-900: #121a33;
+  --color-ink-800: #1c2647;
+  --color-ink-700: #2b3662;
+  --color-ink-600: #4a5580;
+  --color-ink-500: #6b7496;
+  --color-ink-400: #9aa1bb;
+  --color-ink-300: #c4c8d8;
+
+  --color-paper: #f6f3ec;
+  --color-paper-2: #efeadf;
+  --color-paper-3: #e6dfd0;
+  --color-line: #ddd5c4;
+
+  /* The highlighter: the brand's accent, borrowed from the exam's highlight tool. */
+  --color-mark: #e5ff45;
+  --color-mark-deep: #c9e81a;
+  --color-signal: #2f4bff;
+  --color-signal-deep: #1f36d6;
+  --color-coral: #ff6b4a;
+
+  --color-listening: #7c5cff;
+  --color-reading: #0a9a7a;
+  --color-writing: #e0621c;
+  --color-speaking: #1e88e5;
+
+  --radius-card: 1.25rem;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+/* Highlighter stroke used behind display words on the marketing pages. */
+.marker {
+  background-image: linear-gradient(transparent 58%, var(--color-mark) 58%, var(--color-mark) 92%, transparent 92%);
+  padding: 0 0.08em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.grain {
+  background-image: radial-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ─── Exam interface ────────────────────────────────────────────────────── */
+/*
+ * The exam deliberately looks like a computer-delivered test, not like the
+ * marketing site: system sans-serif, flat panels, black on white. Candidates
+ * can switch contrast and text size from the settings menu, as on test day.
+ */
+.exam {
+  --ex-bg: #ffffff;
+  --ex-fg: #111111;
+  --ex-muted: #555555;
+  --ex-panel: #f2f2f2;
+  --ex-panel-2: #e7e7e7;
+  --ex-border: #c9c9c9;
+  --ex-strong-border: #8a8a8a;
+  --ex-accent: #1d4ed8;
+  --ex-accent-fg: #ffffff;
+  --ex-answered: #1f2937;
+  --ex-highlight: #fff176;
+  --ex-note: #ffd54f;
+  --ex-input-bg: #ffffff;
+  --ex-correct: #0f7b3f;
+  --ex-wrong: #c62828;
+  --ex-evidence: #c8f7c5;
+  --ex-font-size: 15px;
+
+  font-family: var(--font-exam);
+  font-size: var(--ex-font-size);
+  background: var(--ex-bg);
+  color: var(--ex-fg);
+}
+
+.exam[data-text='large'] {
+  --ex-font-size: 17px;
+}
+.exam[data-text='xlarge'] {
+  --ex-font-size: 20px;
+}
+
+.exam[data-contrast='white-on-black'] {
+  --ex-bg: #000000;
+  --ex-fg: #ffffff;
+  --ex-muted: #d0d0d0;
+  --ex-panel: #151515;
+  --ex-panel-2: #262626;
+  --ex-border: #5a5a5a;
+  --ex-strong-border: #a0a0a0;
+  --ex-accent: #7fb2ff;
+  --ex-accent-fg: #000000;
+  --ex-answered: #f5f5f5;
+  --ex-highlight: #6b5d00;
+  --ex-note: #8a6a00;
+  --ex-input-bg: #000000;
+  --ex-correct: #7ee2a8;
+  --ex-wrong: #ff8a80;
+  --ex-evidence: #1f4d2a;
+}
+
+.exam[data-contrast='yellow-on-black'] {
+  --ex-bg: #000000;
+  --ex-fg: #ffff00;
+  --ex-muted: #e6e600;
+  --ex-panel: #141400;
+  --ex-panel-2: #262600;
+  --ex-border: #7a7a00;
+  --ex-strong-border: #cccc00;
+  --ex-accent: #ffff00;
+  --ex-accent-fg: #000000;
+  --ex-answered: #ffff00;
+  --ex-highlight: #4d4d00;
+  --ex-note: #806600;
+  --ex-input-bg: #000000;
+  --ex-correct: #7ee2a8;
+  --ex-wrong: #ff8a80;
+  --ex-evidence: #1f4d2a;
+}
+
+.exam button {
+  font-family: inherit;
+}
+
+.exam-input {
+  font-family: var(--font-exam);
+  font-size: var(--ex-font-size);
+  background: var(--ex-input-bg);
+  color: var(--ex-fg);
+  border: 1px solid var(--ex-strong-border);
+  border-radius: 3px;
+  padding: 2px 6px;
+  min-height: 1.9em;
+}
+.exam-input:focus {
+  outline: 2px solid var(--ex-accent);
+  outline-offset: 0;
+  border-color: var(--ex-accent);
+}
+.exam-input::placeholder {
+  color: var(--ex-muted);
+  font-weight: 700;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.exam mark.hl {
+  background: var(--ex-highlight);
+  color: inherit;
+  border-radius: 1px;
+}
+.exam mark.hl-note {
+  background: var(--ex-note);
+  color: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.exam mark.evidence {
+  background: var(--ex-evidence);
+  color: inherit;
+  outline: 1px solid var(--ex-correct);
+  border-radius: 2px;
+}
+
+.exam-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ex-strong-border) transparent;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(220 38 38 / 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgb(220 38 38 / 0);
+  }
+}
+.rec-dot {
+  animation: pulse-ring 1.4s ease-out infinite;
+}
+
+@keyframes toast-in {
+  from {
+    transform: translate(-50%, -12px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+.toast-in {
+  animation: toast-in 0.25s ease-out;
+}
