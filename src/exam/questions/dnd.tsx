@@ -23,7 +23,7 @@ export function DragChip({ groupId, optionKey, children, used }: { groupId: stri
     <button
       type="button"
       draggable={!readOnly && !used}
-      disabled={readOnly}
+      disabled={readOnly || used}
       aria-pressed={isPicked}
       onDragStart={(e) => {
         e.dataTransfer.setData(MIME, JSON.stringify({ groupId, key: optionKey }))

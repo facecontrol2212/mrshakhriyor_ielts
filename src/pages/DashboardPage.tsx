@@ -251,7 +251,7 @@ export function DashboardPage() {
                       </td>
                       {SKILLS.map((s) => (
                         <td key={s} className="px-2 py-3 text-center tabular-nums">
-                          {attempt.skills.includes(s) ? formatBand(summary.bands[s]) : <span className="text-ink-300">·</span>}
+                          {attempt.skills.includes(s) ? formatBand(summary.bands[s]) : <span className="text-ink-400">·</span>}
                         </td>
                       ))}
                       <td className="px-2 py-3 text-center font-semibold tabular-nums">{formatBand(summary.overall)}</td>

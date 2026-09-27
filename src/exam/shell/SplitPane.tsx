@@ -45,7 +45,14 @@ export function SplitPane({ left, right, leftLabel, rightLabel }: { left: ReactN
         {tabButton('left', leftLabel)}
         {tabButton('right', rightLabel)}
       </div>
-      <div className={`exam-scroll min-h-0 flex-1 lg:block lg:flex-none ${tab === 'left' ? 'block' : 'hidden'}`} style={{ flexBasis: `${ratio * 100}%` }} data-pane="left">
+      <div
+        role="region"
+        aria-label={leftLabel}
+        tabIndex={0}
+        className={`exam-scroll min-h-0 flex-1 lg:block lg:flex-none ${tab === 'left' ? 'block' : 'hidden'}`}
+        style={{ flexBasis: `${ratio * 100}%` }}
+        data-pane="left"
+      >
         {left}
       </div>
       <div
@@ -64,7 +71,7 @@ export function SplitPane({ left, right, leftLabel, rightLabel }: { left: ReactN
       >
         <GripVertical size={14} aria-hidden style={{ color: 'var(--ex-muted)' }} />
       </div>
-      <div className={`exam-scroll min-h-0 flex-1 lg:block ${tab === 'right' ? 'block' : 'hidden'}`} data-pane="right">
+      <div role="region" aria-label={rightLabel} tabIndex={0} className={`exam-scroll min-h-0 flex-1 lg:block ${tab === 'right' ? 'block' : 'hidden'}`} data-pane="right">
         {right}
       </div>
     </div>

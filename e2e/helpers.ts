@@ -32,3 +32,33 @@ export const WHALE_ANSWERS: Record<number, string> = {
   12: 'fuel',
   13: 'climate',
 }
+
+/** Store a finished full mock (all four skills) so result pages can be tested without sitting it. */
+export async function seedCompletedAttempt(page: Page, id = 'e2e-complete'): Promise<string> {
+  const now = Date.now()
+  const done = (extra: object = {}) => ({ phase: 'done', startedAt: now - 3_600_000, finishedAt: now - 60_000, answers: {}, flagged: [], highlights: {}, ...extra })
+  const attempt = {
+    id,
+    testId: 'mock-1',
+    mode: 'exam',
+    skills: ['listening', 'reading', 'writing', 'speaking'],
+    current: 3,
+    candidate: { name: 'Seeded Candidate', number: '100200' },
+    createdAt: now - 4 * 3_600_000,
+    confirmedAt: now - 4 * 3_600_000,
+    completedAt: now,
+    status: 'completed',
+    sections: {
+      listening: done({ answers: { '1': 'Denholm', '2': 'Kingsley', '11': 'B', '25-26': ['C', 'A'] } }),
+      reading: done({ answers: { '1': 'FALSE', '8': 'workers', '14': 'v', '37': 'C' } }),
+      writing: done({ essays: { w1: 'Overall, laptops became the most common device.', w2: 'I believe students should study other subjects.' } }),
+      speaking: done({ recordings: [] }),
+    },
+  }
+  await page.goto('/')
+  await page.evaluate((a) => {
+    localStorage.setItem(`msi:v1:attempt:${a.id}`, JSON.stringify(a))
+    localStorage.setItem('msi:v1:attempts', JSON.stringify([a.id]))
+  }, attempt)
+  return id
+}

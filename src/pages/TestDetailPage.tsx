@@ -179,7 +179,7 @@ export function TestDetailPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t.detail.namePlaceholder}
-                className="w-full rounded-xl border border-paper/15 bg-paper/10 px-3.5 py-2.5 text-paper placeholder:text-paper/35 focus:border-mark focus:outline-none"
+                className="w-full rounded-xl border border-paper/15 bg-paper/10 px-3.5 py-2.5 text-paper placeholder:text-paper/50 focus:border-mark focus:outline-none"
               />
             </label>
             <button
@@ -190,7 +190,7 @@ export function TestDetailPage() {
               {t.detail.start} <ArrowRight size={18} />
             </button>
             <div className="mt-6 border-t border-paper/10 pt-5">
-              <p className="mb-3 text-xs font-bold tracking-widest text-paper/40 uppercase">{t.detail.checklistTitle}</p>
+              <p className="mb-3 text-xs font-bold tracking-widest text-paper/60 uppercase">{t.detail.checklistTitle}</p>
               <ul className="space-y-2.5 text-sm text-paper/80">
                 {t.detail.checklist.map((item, i) => {
                   const Icon = [Laptop, Headphones, Mic, Volume2][i] ?? Check

@@ -12,7 +12,7 @@ export function Logo({ inverted }: { inverted?: boolean }) {
         </text>
       </svg>
       <span className={`font-display text-[1.15rem] leading-none font-semibold tracking-tight ${inverted ? 'text-paper' : 'text-ink-950'}`}>
-        mrshakhriyor<span className="ml-1 font-sans text-[0.72em] font-bold tracking-[0.18em] text-ink-500 uppercase">ielts</span>
+        mrshakhriyor<span className={`ml-1 font-sans text-[0.72em] font-bold tracking-[0.18em] uppercase ${inverted ? 'text-paper/70' : 'text-ink-500'}`}>ielts</span>
       </span>
       <span className="sr-only">{site.name}</span>
     </span>

@@ -170,7 +170,7 @@ export function HomePage() {
       {/* Teacher */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6">
         <figure className="relative overflow-hidden rounded-[2rem] bg-mark px-7 py-12 sm:px-14">
-          <p className="text-xs font-bold tracking-[0.2em] text-ink-900/60 uppercase">{h.teacherTitle}</p>
+          <p className="text-xs font-bold tracking-[0.2em] text-ink-900/75 uppercase">{h.teacherTitle}</p>
           <blockquote className="mt-4 max-w-3xl font-display text-2xl leading-snug font-medium text-ink-950 sm:text-3xl">“{site.teacher.bio}”</blockquote>
           <figcaption className="mt-6 flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ink-950 font-display text-lg font-semibold text-mark">{site.teacher.name.replace('Mr ', '')[0]}</span>

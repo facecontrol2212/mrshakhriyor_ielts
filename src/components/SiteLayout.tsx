@@ -101,7 +101,7 @@ function Footer() {
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-paper/60">{t.footer.madeFor}</p>
         </div>
         <div>
-          <h2 className="mb-3 text-xs font-bold tracking-widest text-paper/40 uppercase">{t.footer.practice}</h2>
+          <h2 className="mb-3 text-xs font-bold tracking-widest text-paper/60 uppercase">{t.footer.practice}</h2>
           <ul className="space-y-2 text-sm">
             <li>
               <Link to="/tests" className="hover:text-mark">
@@ -121,7 +121,7 @@ function Footer() {
           </ul>
         </div>
         <div>
-          <h2 className="mb-3 text-xs font-bold tracking-widest text-paper/40 uppercase">{t.footer.learn}</h2>
+          <h2 className="mb-3 text-xs font-bold tracking-widest text-paper/60 uppercase">{t.footer.learn}</h2>
           <ul className="space-y-2 text-sm">
             <li>
               <Link to="/articles" className="hover:text-mark">
@@ -141,7 +141,7 @@ function Footer() {
           </ul>
         </div>
         <div>
-          <h2 className="mb-3 text-xs font-bold tracking-widest text-paper/40 uppercase">{t.footer.contact}</h2>
+          <h2 className="mb-3 text-xs font-bold tracking-widest text-paper/60 uppercase">{t.footer.contact}</h2>
           <ul className="space-y-2 text-sm">
             {contacts.length ? (
               contacts.map((c) => (
@@ -158,7 +158,7 @@ function Footer() {
         </div>
       </div>
       <div className="border-t border-paper/10">
-        <div className="mx-auto max-w-6xl px-4 py-6 text-xs leading-relaxed text-paper/45 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-6 text-xs leading-relaxed text-paper/60 sm:px-6">
           <p className="mb-2">{DISCLAIMER}</p>
           <p>
             © {new Date().getFullYear()} {site.name}. {t.footer.rights}
